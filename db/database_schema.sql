@@ -2,7 +2,7 @@ PRAGMA foreign_keys = true;
 CREATE TABLE Category (
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
 	subject VARCHAR(255) NOT NULL,
-	upper_category_id UNSIGNED INTEGER NOT NULL,
+	upper_category_id UNSIGNED INTEGER,
 	FOREIGN KEY(upper_category_id) REFERENCES Category(id)
 );
 

@@ -4,21 +4,21 @@ class User < ApplicationRecord
 
 	def self.Validate?(params)
 		params[:nick].length > 3 and
-		params[:password].length > 6 and
+		params[:password].length >= 6 and
 		params[:password_confirmation] == params[:password] and
-		self.GetUserByNick(nick: params[:nick]).nil?
+		self.GetUserByNick(params[:nick]).nil?
 	end
 
-	def self.CreateUser(params, password, salt)
-		User.find_by_sql(["INSERT INTO User (nick, password, salt) VALUES (?, ?, ?)", params[:nick], password, salt])
+	def self.CreateUser(nick, password, salt)
+		User.find_by_sql(["INSERT INTO User (nick, password, salt) VALUES (?, ?, ?)", nick.to_s, password, salt])
 	end
 
-	def self.GetUserByNick(params)
-		User.find_by_sql(["SELECT * FROM User WHERE nick=?", params[:nick]]).first
+	def self.GetUserByNick(nick)
+		User.find_by_sql(["SELECT * FROM User WHERE nick=?", nick.to_s]).first
 	end
 
-	def self.GetUserById(params)
-		User.find_by_sql(["SELECT * FROM User WHERE id=?", params[:id]]).first
+	def self.GetUserById(id)
+		User.find_by_sql(["SELECT * FROM User WHERE id=?", id.to_i]).first
 	end
 
 	def updateNick

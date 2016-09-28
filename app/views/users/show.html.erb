@@ -1,0 +1,5 @@
+<% if not @user.nil? %>
+	<p>Nick:<br/> <%= @user.nick %> </p>
+<% else %>
+	<p>No user found</p>
+<% end %>

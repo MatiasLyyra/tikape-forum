@@ -6,7 +6,7 @@ class User < ApplicationRecord
 		params[:nick].length > 3 and
 		params[:password].length >= 6 and
 		params[:password_confirmation] == params[:password] and
-		self.GetUserByNick(params[:nick]).nil?
+		User.GetUserByNick(params[:nick]).nil?
 	end
 
 	def self.CreateUser(nick, password, salt)

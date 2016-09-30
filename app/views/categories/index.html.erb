@@ -1,5 +1,15 @@
+<% #encoding: utf-8 %>
 <% @categories.each do |category| %>
 <ul>
-<li><%= link_to category.subject, category_path(category) %></li>
+<li>
+	<%= link_to category.subject, category_path(category) %>
+	<% if not @allSubCategories[category.id].nil? %>
+		<ul>
+		<% @allSubCategories[category.id].each do |subCategory| %>
+			<li><%= link_to subCategory.subject.force_encoding("UTF-8"), category_path(subCategory) %></li>
+		<% end %>
+		</ul>
+	<% end %>
+</li>
 </ul>
 <% end %>

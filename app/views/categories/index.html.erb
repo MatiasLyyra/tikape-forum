@@ -1,9 +1,6 @@
 <% #encoding: utf-8 %>
 <% @categories.each do |category| %>
 <ul>
-<<<<<<< HEAD
-	<li><%= link_to category.subject, category_path(category) %></li>
-=======
 <li>
 	<%= link_to category.subject, category_path(category) %>
 	<% if not @allSubCategories[category.id].nil? %>
@@ -14,6 +11,5 @@
 		</ul>
 	<% end %>
 </li>
->>>>>>> origin/master
 </ul>
 <% end %>

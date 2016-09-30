@@ -2,11 +2,11 @@
 <div class="Sign_Form">
 	<p id="notice"><%= notice %></p>
 	<h1>Sign Up</h1>
-		<%= form_for(:user, url: {controller: 'users', action: 'create'}) do |f| %>
-			<p> Username:</br> <%= f.text_field :nick, required: true %> </p>
-			<p> Password:</br> <%= f.password_field :password, required: true%></p>
-			<p> Password Confirmation:</br> <%= f.password_field :password_confirmation, required: true %> </p>
-		<%= f.submit :Signup %>
+	<%= form_for(:user, url: {controller: 'users', action: 'create'}) do |f| %>
+	<p> Username:</br> <%= f.text_field :nick, required: true %> </p>
+	<p> Password:</br> <%= f.password_field :password, required: true%></p>
+	<p> Password Confirmation:</br> <%= f.password_field :password_confirmation, required: true %> </p>
+	<%= f.submit :Signup %>
 	<% end %>
 
 </div>

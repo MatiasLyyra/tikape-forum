@@ -42,6 +42,7 @@ INSERT INTO Category (subject) VALUES ('Autot');
 INSERT INTO Category (subject) VALUES ('Lehmät');
 INSERT INTO Category (subject) VALUES ('Kissat');
 INSERT INTO Category (subject) VALUES ('Tietokoneet');
+INSERT INTO Category (subject, upper_category_id) VALUES ('Linux', 4);
 
 INSERT INTO Discussion (title, category_id) VALUES ('Mun lempiauto', 1);
 INSERT INTO Discussion (title, category_id) VALUES ('Mersut > Audit', 1);

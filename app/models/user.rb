@@ -21,6 +21,11 @@ class User < ApplicationRecord
 		User.find_by_sql(["SELECT * FROM User WHERE id=?", id.to_i]).first
 	end
 
+	def self.Authenticate(nick, password)
+		user = User.GetUserByNick(nick)
+		user and user.password == BCrypt::Engine.hash_secret(password, user.salt)
+	end
+
 	def updateNick
 		User.find_by_sql(["UPDATE User SET nick=? WHERE id=?", self.nick, self.id]);
 	end

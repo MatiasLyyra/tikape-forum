@@ -15,4 +15,8 @@ class Category < ApplicationRecord
     Category.find_by_sql(["SELECT * FROM Category WHERE id=?", id.to_i]).first
   end
 
+  def getSubCategories
+    Category.find_by_sql(["SELECT * FROM Category WHERE upper_category_id=?", self.id])
+  end
+
 end

@@ -1,0 +1,10 @@
+<% @page_title = "UserAuth | Signin" %>
+<div class="Sign_Form">
+  <p id="notice"><%= notice %></p>
+  <h1>Sign in</h1>
+    <%= form_tag action: "create", controller: "sessions", method: :post do %>
+      <p> Username:</br> <%= text_field_tag :nick, params[:nick], required: true %> </p>
+      <p> Password:</br> <%= password_field_tag :password, nil, required: true%></p>
+    <%= submit_tag "Log in" %>
+  <% end %>
+</div>

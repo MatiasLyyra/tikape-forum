@@ -2,10 +2,16 @@ class User < ApplicationRecord
   self.table_name = 'user'
 
   def self.Validate?(params)
-    params[:nick].length > 3 and
-    params[:password].length >= 6 and
-    params[:password_confirmation] == params[:password] and
-    User.GetUserByNick(params[:nick]).nil?
+    User.ValidateNick(params[:nick]) and
+    User.ValidatePassword(params[:password], params[:password_confirmation])
+  end
+
+  def self.ValidateNick(nick)
+    nick.length > 3 and User.GetUserByNick(nick).nil?
+  end
+
+  def self.ValidatePassword(password, password_confirmation)
+    password.length >= 6 and password == password_confirmation
   end
 
   def self.CreateUser(nick, password, salt)
@@ -25,12 +31,15 @@ class User < ApplicationRecord
     user and user.password == BCrypt::Engine.hash_secret(password, user.salt)
   end
 
-  def updateNick
+  def updateNick(nick)
+    self.nick = nick
     User.find_by_sql(["UPDATE User SET nick=? WHERE id=?", self.nick, self.id]);
   end
 
-  def updatePassword
-    User.find_by_sql(["UPDATE User SET salasana=?, salt=? WHERE id=?", self.password, self.salt, self.id]);
+  def updatePassword(password)
+    self.salt = BCrypt::Engine.generate_salt
+    self.password = BCrypt::Engine.hash_secret(password, self.salt)
+    User.find_by_sql(["UPDATE User SET password=?, salt=? WHERE id=?", self.password, self.salt, self.id]);
   end
 
   def newLogin

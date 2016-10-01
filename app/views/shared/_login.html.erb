@@ -1,0 +1,9 @@
+<div id="login-bar">
+  <li class="right-align">
+    <%= form_for(:session, url: {controller: 'sessions', action: 'create'}) do |f| %>
+    Nick: <%= text_field_tag :nick, nil, required: true, size: 4%>
+    Password: <%= password_field_tag :password, nil, required: true, size: 4%>
+    <%= submit_tag "Log in", class: "nav-button"%>
+    <% end %>
+  </li>
+</div>

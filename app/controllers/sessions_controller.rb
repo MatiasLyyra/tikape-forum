@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  before_action :save_login_state, only: [:new, :create]
 
   def new
   end
@@ -7,9 +8,10 @@ class SessionsController < ApplicationController
     user = User.GetUserByNick(params[:nick])
     if user and User.Authenticate(params[:nick], params[:password])
       session[:user_id] = user.id
+      user.newLogin
       redirect_to user_path(user), notice: "Successfully logged in!"
     else
-      redirect_to :back, notice: "Password or nick did not match"
+      redirect_to_back_or_root "Password or nick did not match"
     end
   end
 

@@ -1,0 +1,12 @@
+<div id="nav-list">
+  <ul>
+    <li><%= link_to 'Categories', controller: :categories %></li>
+    <% if not session[:user_id].nil? %>
+      <li><%= link_to 'My profile', user_path(session[:user_id]) %></li>
+      <li class="right-align"><%= link_to 'Sign out', signout_path %></li>
+    <% else %>
+      <li class="right-align"><%= link_to 'Sign up', signup_path %></li>
+      <%= render 'shared/login' %>
+    <% end %>
+  </ul>
+</div>

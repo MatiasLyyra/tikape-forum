@@ -32,7 +32,7 @@ class User < ApplicationRecord
   end
 
   def updateNick(nick)
-    self.nick = nick
+    self.nick = nick.to_s
     User.find_by_sql(["UPDATE User SET nick=? WHERE id=?", self.nick, self.id]);
   end
 
@@ -40,6 +40,12 @@ class User < ApplicationRecord
     self.salt = BCrypt::Engine.generate_salt
     self.password = BCrypt::Engine.hash_secret(password, self.salt)
     User.find_by_sql(["UPDATE User SET password=?, salt=? WHERE id=?", self.password, self.salt, self.id]);
+  end
+
+  def changeAdminStatus(admin)
+    self.admin = admin
+    User.find_by_sql(["UPDATE User SET admin=? WHERE id=?", (self.admin ? 1 : 0), self.id]);
+
   end
 
   def newLogin

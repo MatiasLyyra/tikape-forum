@@ -1,12 +1,13 @@
 <div class="Sign_Form">
-  <p id="notice"><%= notice %></p>
-  <h1>Edit user</h1>
-  <%= form_for(@current_user) do |f| %>
+  <h1>Edit user: <%= "#{@user.nick}"%></h1>
+  <%= form_for(@user) do |f| %>
     <p> New nick:</br> <%= f.text_field :nick, value: nil%> </p>
     
     <p> New password:</br> <%= f.password_field :password%></p>
     <p> Repeat new password:</br> <%= f.password_field :password_confirmation %> </p>
-
+    <% if @current_user.admin %>
+      <p> Admin: <%= f.check_box :admin, checked: @user.admin %> </p>
+    <% end %>
     <p> Verify new changes with current password:</br> <%= f.password_field :old_password, required: true %> </p>
     <%= f.submit :Update %>
   <% end %>

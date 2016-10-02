@@ -10,6 +10,9 @@
 
   <body>
     <%= render "shared/nav_bar" %>
-    <%= yield %>
+      <div id="main">
+      <p id="notice"><%= notice %></p>
+      <%= yield %>
+    </div>
   </body>
 </html>

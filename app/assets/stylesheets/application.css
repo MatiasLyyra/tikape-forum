@@ -16,6 +16,18 @@
 body {
   font-family: helvetica;
 }
+
+#main {
+  background-color: #e3e3e3;
+  position: relative;
+  top: 0px;
+  height:100%;
+  width:100%;
+  overflow: hidden;
+  padding: 10px;
+  padding-top: 5px;
+}
+
 #nav-list ul {
   list-style-type: none;
   margin: 0;
@@ -52,22 +64,26 @@ body {
   float: right;
 }
 
+.nav-textfield {
+  width: 100px;
+}
+
 #nav-list #login-bar {
-  color: #a3a3a3;
-  margin: 5px 0;
+  color: #a3a3a3; 
+  padding-top: 7px;
 }
 
 .nav-button {
-    position: relative;
-    top: -5px;
-    padding: 10px 16px;
-    padding-bottom:100%;
-    margin-bottom:-100%;
-    border: none;
-    font-size: 16px;
-    color: #a3a3a3;
-    float: right;
-    background-color: #2c2c2c;
+  position: relative;
+  top: -7px;
+  padding: 10px 16px;
+  padding-bottom:100%;
+  margin-bottom:-100%;
+  border: none;
+  font-size: 16px;
+  color: #a3a3a3;
+  float: right;
+  background-color: #2c2c2c;
 }
 
 .nav-button:hover {

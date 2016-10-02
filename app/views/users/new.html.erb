@@ -1,6 +1,5 @@
 <% @page_title = "UserAuth | Signup" %>
 <div class="Sign_Form">
-  <p id="notice"><%= notice %></p>
   <h1>Sign Up</h1>
   <%= form_for(:user, url: {controller: 'users', action: 'create'}) do |f| %>
     <p> Nick:</br> <%= f.text_field :nick, required: true %> </p>

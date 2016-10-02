@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   require 'bcrypt'
-  before_action :set_user, only:[:show]
+  before_action :set_user, only:[:show, :edit, :update]
   before_action :save_login_state, only: [:new, :create]
   before_action :authenticate_user, only: [:edit, :update]
   before_action :check_if_current_user, only: [:edit, :update]
@@ -32,12 +32,14 @@ class UsersController < ApplicationController
   def update
     nick_empty = user_params[:nick].empty?
     password_empty = user_params[:password].empty?
+    admin = user_params[:admin] or false
     nick_valid = nick_empty || User.ValidateNick(user_params[:nick])
     password_valid = password_empty || User.ValidatePassword(user_params[:password], user_params[:password_confirmation])
     if nick_valid and password_valid and User.Authenticate(@current_user.nick, user_params[:old_password])
-      @current_user.updateNick(user_params[:nick]) unless nick_empty
-      @current_user.updatePassword(user_params[:password]) unless password_empty
-      redirect_to @current_user
+      @user.updateNick(user_params[:nick]) unless nick_empty
+      @user.updatePassword(user_params[:password]) unless password_empty
+      @user.changeAdminStatus(admin) if @current_user.admin?
+      redirect_to @user
     else
       if not nick_valid
         flash[:notice] = 'Nick is already taken or it is too short'
@@ -57,11 +59,17 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:nick, :password, :password_confirmation, :old_password)
+    # List of common params
+    list_params_allowed = [:nick, :password, :password_confirmation, :old_password]
+    # Add the params only for admin
+    unless @current_user.nil?
+      list_params_allowed << :admin if @current_user.admin?
+    end
+    params.require(:user).permit(list_params_allowed)
   end
 
   def check_if_current_user
-    if @current_user and session[:user_id] == params[:id].to_i
+    if @current_user && (session[:user_id] == params[:id].to_i || @current_user.admin)
       return true
     else
       redirect_to_back_or_root 'You can not change other users'

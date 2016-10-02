@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
       @current_user = User.GetUserById(session[:user_id])
       return true
     else
-      redirect_to(controller: 'sessions', action: 'new')
+      redirect_to signin_path
       return false
     end
   end

@@ -22,6 +22,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authenticate_admin
+    @current_user = User.GetUserById(session[:user_id])
+    if @current_user.nil? 
+      redirect_to_back_or_root 'You do not have permission for this'
+      return false
+    else
+      redirect_to_back_or_root 'You do not have permission for this' unless @current_user.admin
+      return @current_user.admin
+    end
+  end
+
   def redirect_to_back_or_root(notice = '')
     begin
       redirect_to :back, notice: notice

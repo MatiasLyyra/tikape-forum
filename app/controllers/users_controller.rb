@@ -4,8 +4,13 @@ class UsersController < ApplicationController
   before_action :save_login_state, only: [:new, :create]
   before_action :authenticate_user, only: [:edit, :update]
   before_action :check_if_current_user, only: [:edit, :update]
+  before_action :authenticate_admin, only: [:list]
   
   def new
+  end
+
+  def list
+    @all_users = User.find_by_sql("SELECT * FROM User")
   end
 
   def create

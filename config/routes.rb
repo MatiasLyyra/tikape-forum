@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   get 'signin' => 'sessions#new'
   get 'signout' => 'sessions#destroy'
   get 'signup' => 'users#new'
+  get 'all_users' => 'users#list'
 end

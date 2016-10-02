@@ -1,0 +1,12 @@
+<% @all_users.each do |user| %>
+<ul>
+<li>
+  id: <%= user.id %>
+  nick: 
+  <%= link_to user.nick, user_path(user) %><br/>
+  Admin status: <%= user.admin ? 'True' : 'False'%> | 
+  Last login: <%= user.last_login %> | 
+  <%= link_to 'Edit', controller: 'users', action: 'edit', id: user.id %>
+</li>
+</ul>
+<% end %>

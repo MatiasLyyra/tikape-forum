@@ -1,9 +1,6 @@
-<div id="login-bar">
-  <li class="right-align">
-    <%= form_for(:session, url: {controller: 'sessions', action: 'create'}) do |f| %>
-    Nick: <%= text_field_tag :nick, nil, required: true, autocomplete: "off", class: "nav-textfield"%>
-    Password: <%= password_field_tag :password, nil, required: true, class: "nav-textfield"%>
-    <%= submit_tag "Log in", class: "nav-button"%>
-    <% end %>
-  </li>
-</div>
+<%= form_tag({controller: "sessions", action: "create"}, {class: 'nav navbar-form'}) do%>
+  <%= text_field_tag :nick, nil, required: true, autocomplete: 'off', placeholder: "Nick", class: 'form-control'%>
+  <%= password_field_tag :password, nil, required: true, placeholder: "Password", class: 'form-control'%>
+  <%= submit_tag 'Log in', class: 'btn btn-default'%>
+<% end %>
+

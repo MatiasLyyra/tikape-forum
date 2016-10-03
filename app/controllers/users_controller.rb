@@ -23,9 +23,9 @@ class UsersController < ApplicationController
       redirect_to signin_path(nick: @user.nick)
     else
       if not User.GetUserByNick(user_params[:nick]).nil?
-        flash[:notice] = 'Nick is already taken'
+        flash[:alert] = 'Nick is already taken'
       else
-        flash[:notice] = 'Invalid form'
+        flash[:alert] = 'Invalid form'
       end
       redirect_to :back
     end
@@ -44,12 +44,12 @@ class UsersController < ApplicationController
       @user.updateNick(user_params[:nick]) unless nick_empty
       @user.updatePassword(user_params[:password]) unless password_empty
       @user.changeAdminStatus(admin) if @current_user.admin?
-      redirect_to @user
+      redirect_to @user, notice: "Updated successfully"
     else
       if not nick_valid
-        flash[:notice] = 'Nick is already taken or it is too short'
+        flash[:alert] = 'Nick is already taken or it is too short'
       else
-        flash[:notice] = 'Passwords did not match or the current password was wrong'
+        flash[:alert] = 'Passwords did not match or the current password was wrong'
       end
       redirect_to :back
     end
@@ -77,7 +77,7 @@ class UsersController < ApplicationController
     if @current_user && (session[:user_id] == params[:id].to_i || @current_user.admin)
       return true
     else
-      redirect_to_back_or_root 'You can not change other users'
+      redirect_to_back_or_root alert: 'You can not change other users'
       return false
     end
   end

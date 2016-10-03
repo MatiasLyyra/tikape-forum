@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   def save_login_state
     if session[:user_id]
-      redirect_to_back_or_root 'You are already logged in'
+      redirect_to_back_or_root notice: 'You are already logged in'
       return false
     else
       return true
@@ -25,19 +25,26 @@ class ApplicationController < ActionController::Base
   def authenticate_admin
     @current_user = User.GetUserById(session[:user_id])
     if @current_user.nil? 
-      redirect_to_back_or_root 'You do not have permission for this'
+      redirect_to_back_or_root alert: 'You do not have permission for this'
       return false
     else
-      redirect_to_back_or_root 'You do not have permission for this' unless @current_user.admin
+      redirect_to_back_or_root alert: 'You do not have permission for this' unless @current_user.admin
       return @current_user.admin
     end
   end
 
-  def redirect_to_back_or_root(notice = '')
+  def redirect_to_back_or_root(params)
+    if params[:alert]
+      flash[:alert] = params[:alert]
+    end
+    if params[:notice]
+      flash[:notice] = params[:notice]
+    end
+    
     begin
-      redirect_to :back, notice: notice
+      redirect_to :back
     rescue ActionController::RedirectBackError
-      redirect_to :root, notice: notice
+      redirect_to :root
     end
   end
 end

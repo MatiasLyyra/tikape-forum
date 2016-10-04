@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       user.newLogin
       redirect_to user_path(user), notice: "Successfully logged in!"
     else
-      redirect_to_back_or_root "Password or nick did not match"
+      redirect_to_back_or_root alert: "Password or nick did not match"
     end
   end
 

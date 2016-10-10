@@ -1,0 +1,25 @@
+class Message < ApplicationRecord
+  self.table_name = 'message'
+
+  validates :message, presence: true
+
+  def self.createMessage(message)
+    Message.find_by_sql(["INSERT INTO Message (message, ???POSTER???) VALUES (?)", message.to_s])
+  end
+
+  def self.findMessage(message) <--- finds by content (SORT BY..?)
+    Message.find_by_sql(["SELECT * FROM Message WHERE message LIKE...", message.to_s]).first
+  end
+
+  def self.getMessageByUser(message)
+    Message.find_by_sql(["SELECT * FROM Message WHERE user_id=?", id.to_i]).first
+  end
+  
+  def self.getMessageByDiscussion(message)
+	Message.find_by_sql(["SELECT * FROM Message WHERE discussion_id=?", discussion_id.to_i]).first
+  end
+  
+  def self.getMessageByUserInDiscussion(message)
+	Message.find_by_sql(["SELECT * FROM Message WHERE discussion_id=? AND user_id=?", discussion_id.to.i, user_id.to.i]).first
+  end
+end

@@ -1,1 +1,8 @@
 <h1><%= @category.subject %></h1>
+<ul>
+<% @discussions.each do |discussion| %>
+	<li>
+		<%= link_to discussion.title, discussion_path(discussion.id) %>
+	</li>
+<% end %>
+</ul>

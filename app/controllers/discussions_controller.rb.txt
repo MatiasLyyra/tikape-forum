@@ -1,0 +1,23 @@
+
+class DiscussionsController < ApplicationController
+  before_action :list_all_discussions, only: [:index]
+
+  def index
+  end
+
+  def new
+  end
+
+  def create
+  end
+
+  def show
+  end
+
+  private
+
+  def list_all_discussions
+    @discussions = Discussion.find_by_sql(["SELECT * FROM Discussion"])
+  end
+
+end

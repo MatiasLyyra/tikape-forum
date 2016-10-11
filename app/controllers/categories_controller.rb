@@ -13,7 +13,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-	@discussion = Discussions.getDiscussionsByCategory(@category.id)
+	 @discussions = Discussion.getDiscussionsByCategory(@category.id)
   end
 
   private

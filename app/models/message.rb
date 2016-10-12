@@ -2,6 +2,10 @@ class Message < ApplicationRecord
   self.table_name = 'message'
 
   validates :message, presence: true
+  
+  def self.validate?(message, discussion_id)
+	message.length > 0 && discussion_id not nil
+  end
 
   def self.createMessage(user_id, message, discussion_id)
     time = Time.now.getutc.strftime('%Y-%m-%d %H:%M:%S')

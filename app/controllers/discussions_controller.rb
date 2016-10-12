@@ -1,7 +1,7 @@
 
 class DiscussionsController < ApplicationController
   before_action :list_all_discussions, only: [:index]
-
+  before_action :authenticate_user, only: [:new, :create]
 
 
   def index

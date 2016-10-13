@@ -19,7 +19,7 @@ class Discussion < ApplicationRecord
   end
 
   def self.getMessagesByDiscussionId(id) 
-    Discussion.find_by_sql(["SELECT * FROM Message WHERE discussion_id=? SORT BY time DESC"])
+    Discussion.find_by_sql(["SELECT * FROM Message WHERE discussion_id=? ORDER BY time DESC", id.to_i])
   end
 
   

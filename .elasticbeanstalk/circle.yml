@@ -1,0 +1,11 @@
+branch-defaults:
+  master:
+    environment: tikapeForum-env
+    group_suffix: null
+global:
+  application_name: tikape-forum
+  default_ec2_keyname: jesse-aws
+  default_platform: Ruby 2.3.1 (Puma)
+  default_region: us-east-1
+  profile: eb-cli
+  sc: git

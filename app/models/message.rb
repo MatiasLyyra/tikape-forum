@@ -4,7 +4,7 @@ class Message < ApplicationRecord
   validates :message, presence: true
   
   def self.validate?(message, discussion_id)
-	message.length > 0 && (not Discussion.getDiscussionById(discussion_id).nil?)
+    message.length > 0 && (Discussion.getDiscussionById(discussion_id) != nil)
   end
 
   def self.createMessage(user_id, message, discussion_id)
@@ -20,8 +20,8 @@ class Message < ApplicationRecord
     Message.find_by_sql(["SELECT * FROM Message WHERE user_id=?", id.to_i])
   end
   
-  def self.getMessagesByDiscussion(discussion_id)
-	 Message.find_by_sql(["SELECT * FROM Message WHERE discussion_id=? SORT BY time DESC", discussion_id.to_i])
+  def self.getMessagesByDiscussionId(discussion_id)
+    Message.find_by_sql(["SELECT * FROM Message WHERE discussion_id=? ORDER BY time DESC", discussion_id.to_i])
   end
   
   def self.getMessageById(id)

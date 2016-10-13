@@ -2,6 +2,7 @@
 class DiscussionsController < ApplicationController
   before_action :list_all_discussions, only: [:index]
   before_action :authenticate_user, only: [:new, :create]
+  before_action :set_discussion, only: [:show]
 
 
   def index
@@ -21,16 +22,14 @@ class DiscussionsController < ApplicationController
   end
 
   def show
-    @discussion = Discussion.getDiscussionById(params[:id])
-    @messages = Discussion.getMessagesByDiscussionId(@discussion.id)
+    @messages = Message.getMessagesByDiscussionId(@discussion.id)
+    @firstMessage = @messages.shift
   end
 
-
-
-
   private
-
-
+  def set_discussion
+    @discussion = Discussion.getDiscussionById(params[:id])
+  end
 
   def list_all_discussions
     @discussions = Discussion.find_by_sql(["SELECT * FROM Discussion"])
@@ -38,7 +37,7 @@ class DiscussionsController < ApplicationController
 
   def discussion_params
     # List of common params
-    list_params_allowed = [:title, :category_id]
+    list_params_allowed = [:title, :category_id, :message]
     params.require(:discussion).permit(list_params_allowed)
   end
 end

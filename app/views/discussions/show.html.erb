@@ -1,6 +1,6 @@
 <h1><%= @discussion.title %></h1>
-
-
-<p><% @message.each do |message| %> 
-<%= message.sisältötjsp %>
-<%end%></p>
+<p><%= @firstMessage.message %></p>
+<p><%= User.GetUserById(@firstMessage.user_id).nick %></p>
+<% @messages.each do |message| %> 
+  
+<%end%>

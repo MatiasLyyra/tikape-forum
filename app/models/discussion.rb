@@ -18,12 +18,7 @@ class Discussion < ApplicationRecord
     Discussion.find_by_sql(["SELECT * FROM Discussion WHERE id=?", id.to_i]).first
   end
 
-  def self.getMessagesByDiscussionId(id) 
-    Discussion.find_by_sql(["SELECT * FROM Message WHERE discussion_id=? ORDER BY time DESC", id.to_i])
-  end
-
-  
   def self.getDiscussionsByCategory(category_id)
-	 Discussion.find_by_sql(["SELECT * FROM Discussion WHERE category_id=?", category_id.to_i])
+    Discussion.find_by_sql(["SELECT * FROM Discussion WHERE category_id=?", category_id.to_i])
   end
 end

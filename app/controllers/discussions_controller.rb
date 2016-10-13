@@ -21,9 +21,12 @@ class DiscussionsController < ApplicationController
   end
 
   def show
+    @discussion = Discussion.getDiscussionById(params[:id])
   end
 
   private
+
+
 
   def list_all_discussions
     @discussions = Discussion.find_by_sql(["SELECT * FROM Discussion"])

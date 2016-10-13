@@ -12,9 +12,12 @@ class DiscussionsController < ApplicationController
   end
 
   def create
-    if Discussion.validate?(discussion_params[:title], params[:category_id])
-      @discussion = Discussion.createDiscussion(discussion_params[:title], params[:category_id]).first
-      redirect_to category_path(params[:category_id].to_i)
+    if Discussion.validate?(discussion_params[:title], params[:category_id]) && discussion_params[:message] != nil
+      Discussion.createDiscussion(discussion_params[:title], params[:category_id])
+      #Dirty hack below. 
+      @discussion = Discussion.where(title: discussion_params[:title]).order("time DESC").first
+      Message.createMessage(session[:user_id], discussion_params[:message], @discussion.id)
+      redirect_to discussion_path(@discussion.id)
     else
       flash[:alert] = 'Invalid form'
       redirect_to :back

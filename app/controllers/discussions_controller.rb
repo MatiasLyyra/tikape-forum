@@ -22,7 +22,7 @@ class DiscussionsController < ApplicationController
 
   def show
     @discussion = Discussion.getDiscussionById(params[:id])
-    
+    @messages = Discussion.getMessagesByDiscussionId(@discussion.id)
   end
 
 

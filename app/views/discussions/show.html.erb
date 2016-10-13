@@ -1,5 +1,6 @@
 <h1><%= @discussion.title %></h1>
 
-<p><% @discussion.getMessagesByDiscussionId.each do |message| %> 
+
+<p><% @message.each do |message| %> 
 <%= message.sisältötjsp %>
 <%end%></p>

@@ -9,7 +9,7 @@ module UsersHelper
   end
 
   def is_user_logged_in?
-    return (not session[:user_id].nil?)
+    return session[:user_id] != nil
   end
 
   def get_current_user

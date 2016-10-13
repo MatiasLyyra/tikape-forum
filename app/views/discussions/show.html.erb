@@ -1,6 +1,6 @@
 <h1><%= @discussion.title %></h1>
 <p><%= @firstMessage.message %></p>
-<p><%= User.GetUserById(@firstMessage.user_id).nick %></p>
+<p>By: <%= User.GetUserById(@firstMessage.user_id).nick %></p>
 <% @messages.each do |message| %> 
   
 <%end%>

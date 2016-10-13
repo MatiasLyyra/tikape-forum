@@ -27,6 +27,13 @@ class Message < ApplicationRecord
   def self.getMessageById(id)
     Message.find_by_sql(["SELECT * FROM Message WHERE id=?", id.to_i]).first 
   end
+
+  def self.getNewestMessageByCategoryId(category_id)
+    Message.find_by_sql(["SELECT * FROM Message 
+      INNER JOIN Discussion ON Message.discussion_id = Discussion.id 
+      INNER JOIN Category ON Discussion.category_id = Category.id WHERE Category.id=?
+      ORDER BY Message.time DESC LIMIT 1", category_id.to_i]).first
+  end
   #def self.getMessageByUserInDiscussion(message)
 	#Message.find_by_sql(["SELECT * FROM Message WHERE discussion_id=? AND user_id=?", discussion_id.to.i, user_id.to.i]).first
   #end

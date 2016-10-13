@@ -22,7 +22,11 @@ class DiscussionsController < ApplicationController
 
   def show
     @discussion = Discussion.getDiscussionById(params[:id])
+    
   end
+
+
+
 
   private
 

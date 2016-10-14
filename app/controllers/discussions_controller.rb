@@ -28,7 +28,6 @@ class DiscussionsController < ApplicationController
   def show
     @messages = Message.getMessagesByDiscussionId(@discussion.id)
     @firstMessage = @messages.shift
-    
   end
 
   private

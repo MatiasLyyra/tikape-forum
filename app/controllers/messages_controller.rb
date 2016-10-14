@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
   
   def create
     if Message.validate?(message_params[:message])
-      @message = Message.createMessage(@current_user.id, message_params[:message], params[:discussion_id]).first
+      @message = Message.createMessage(message_params[:message], @current_user.id).first
       redirect_to discussion_path(params[:discussion_id].to_i)
     else
       flash[:alert] = 'Invalid form'

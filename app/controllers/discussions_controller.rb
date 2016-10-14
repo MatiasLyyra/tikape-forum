@@ -3,6 +3,7 @@ class DiscussionsController < ApplicationController
   before_action :list_all_discussions, only: [:index]
   before_action :authenticate_user, only: [:new, :create]
   before_action :set_discussion, only: [:show]
+  before_action :set_category, only: [:show]
 
 
   def index
@@ -14,7 +15,7 @@ class DiscussionsController < ApplicationController
   def create
     if Discussion.validate?(discussion_params[:title], params[:category_id]) && discussion_params[:message] != nil
       Discussion.createDiscussion(discussion_params[:title], params[:category_id])
-      #Dirty hack below. 
+      #Dirty hack below.
       @discussion = Discussion.where(title: discussion_params[:title]).order("time DESC").first
       Message.createMessage(session[:user_id], discussion_params[:message], @discussion.id)
       redirect_to discussion_path(@discussion.id)
@@ -32,6 +33,10 @@ class DiscussionsController < ApplicationController
   private
   def set_discussion
     @discussion = Discussion.getDiscussionById(params[:id])
+  end
+
+  def set_category
+    @category = Category.getCategoryById(params[:category_id])
   end
 
   def list_all_discussions

@@ -1,6 +1,2 @@
-<% if not @user.nil? %>
-  <p>Nick:<br/> <%= @user.nick %> </p>
-  <p><%= link_to 'Edit', edit_user_path(@user) %></p>
-<% else %>
-  <p>No user found</p>
-<% end %>
+<p>Nick:<br/> <%= @user.nick %> </p>
+<p><%= link_to 'Edit', edit_user_path(@user) %></p>

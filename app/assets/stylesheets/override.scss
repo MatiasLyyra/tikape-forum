@@ -1,6 +1,12 @@
 body {
   padding-top: 65px;
 }
+
+.panel > .panel-heading {
+    background-image: none;
+    background-color: #3b4047;
+    color: white;
+}
 @media (max-width: 810px) {
     .navbar-header {
         float: none;

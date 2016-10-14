@@ -1,5 +1,5 @@
 <div class="Sign_Form">
-  <h1>Edit user: <%= "#{@user.nick}"%></h1>
+  <h1>Edit user: <%= @user.nick %></h1>
   <%= form_for(@user) do |f| %>
     <p> New nick:</br> <%= f.text_field :nick, value: nil%> </p>
     

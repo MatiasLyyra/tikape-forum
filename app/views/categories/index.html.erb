@@ -9,14 +9,14 @@
   <tbody>
   <% @categories.each do |category| %>
     <tr>
-      <td><%= link_to category.subject, category_path(category) %></td>
+      <td><%= link_to category.subject, category %></td>
       <td><%= get_number_of_messages_in_category(category.id) %></td>
       <td><%= get_newest_message_date_in_category(category.id) %></td>
     </tr>
     <% if not @allSubCategories[category.id].nil? %>
       <% @allSubCategories[category.id].each do |subCategory| %>
         <tr>
-          <td style="padding-left: 25px">&#8627;<%= link_to subCategory.subject, category_path(subCategory) %></td>
+          <td style="padding-left: 25px">&#8627;<%= link_to subCategory.subject, subCategory %></td>
           <td><%= get_number_of_messages_in_category(subCategory.id) %></td>
           <td><%= get_newest_message_date_in_category(subCategory.id) %></td>
         </tr>

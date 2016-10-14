@@ -15,7 +15,7 @@
   <tbody>
   <% @discussions.each do |discussion| %>
     <tr>
-      <td><%= link_to discussion.title, category_discussion_path(discussion.id) %></td>
+      <td><%= link_to discussion.title, [@category, discussion] %></td>
       <td><%= get_number_of_messages_in_discussion(discussion.id) %></td>
       <td><%= get_newest_message_date_in_discussion(discussion.id) %></td>
     </tr>

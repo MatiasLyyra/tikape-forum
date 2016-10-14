@@ -1,4 +1,4 @@
-class MessagesController < ApplicationsController
+class MessagesController < ApplicationController
   before_action :authenticate_user, only: [:create, :new]
 
   def index
@@ -15,6 +15,7 @@ class MessagesController < ApplicationsController
       flash[:alert] = 'Invalid form'
       redirect_to :back
     end
+  end
 
   private
   def list_all_messages

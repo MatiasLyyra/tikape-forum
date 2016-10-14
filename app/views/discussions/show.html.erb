@@ -2,22 +2,19 @@
 <p><%= @firstMessage.message %></p>
 <p>By: <%= User.GetUserById(@firstMessage.user_id).nick %></p>
 <% @messages.each do |message| %> 
-  
+
 <%end%>
-<br><br><br><br>
-<div class="form-group">
-<h4>Reply new message</h4>
+<h3>New Message</h3>
 <%= form_for(:message, url: {controller: 'messages', action: 'create'}, html: {class: "form-horizontal"}) do |f| %>
-
-
-
-<div class="col-sm-6">
-      <%= f.text_area :message, required: true, rows: 10, class: "form-control"%>
+  <div class="form-group">
+    <div class="col-sm-6">
+      <%= f.text_area :message, required: true, rows: 15, class: "form-control"%>
     </div>
-
-    
-
-    <%= f.submit "Reply message", class: "btn btn-default"%>
-
-    <%end%>
-    </div>
+    <div class="col-sm-6"></div>
+  </div>
+  <%= hidden_field_tag :category_id, params[:category_id]%>
+  <div class="form-group" style="padding-left: 15px">
+    <%= f.submit "Post", class: "btn btn-default"%>
+  </div>
+<% end %>
+</div>

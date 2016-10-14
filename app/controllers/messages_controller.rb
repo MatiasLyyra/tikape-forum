@@ -6,11 +6,13 @@ class MessagesController < ApplicationController
 
   def new
   end
-  
+
   def create
     if Message.validate?(message_params[:message])
-      @message = Message.createMessage(message_params[:message], @current_user.id).first
-      redirect_to discussion_path(params[:discussion_id].to_i)
+      @discussion = Discussion.getDiscussionById(params[:discussion_id])
+      @category = Category.getCategoryById(params[:category_id])
+      @message = Message.createMessage(@current_user.id,message_params[:message], params[:discussion_id]).first
+      redirect_to category_discussion_path(@category, @discussion)
     else
       flash[:alert] = 'Invalid form'
       redirect_to :back

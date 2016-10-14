@@ -2,9 +2,9 @@ class Message < ApplicationRecord
   self.table_name = 'message'
 
   validates :message, presence: true
-  
-  def self.validate?(message, discussion_id)
-    message.length > 0 && (Discussion.getDiscussionById(discussion_id) != nil)
+
+  def self.validate?(*attr)
+    attr.pop.length > 0 # katotaan miten tää saadaa sulaa: && (Discussion.getDiscussionById(discussion_id) != nil)
   end
 
   def self.createMessage(user_id, message, discussion_id)
@@ -19,18 +19,18 @@ class Message < ApplicationRecord
   def self.getMessagesByUser(message)
     Message.find_by_sql(["SELECT * FROM Message WHERE user_id=?", id.to_i])
   end
-  
+
   def self.getMessagesByDiscussionId(discussion_id)
     Message.find_by_sql(["SELECT * FROM Message WHERE discussion_id=? ORDER BY time DESC", discussion_id.to_i])
   end
-  
+
   def self.getMessageById(id)
-    Message.find_by_sql(["SELECT * FROM Message WHERE id=?", id.to_i]).first 
+    Message.find_by_sql(["SELECT * FROM Message WHERE id=?", id.to_i]).first
   end
 
   def self.getNewestMessageByCategoryId(category_id)
-    Message.find_by_sql(["SELECT * FROM Message 
-      INNER JOIN Discussion ON Message.discussion_id = Discussion.id 
+    Message.find_by_sql(["SELECT * FROM Message
+      INNER JOIN Discussion ON Message.discussion_id = Discussion.id
       INNER JOIN Category ON Discussion.category_id = Category.id WHERE Category.id=?
       ORDER BY Message.time DESC LIMIT 1", category_id.to_i]).first
   end

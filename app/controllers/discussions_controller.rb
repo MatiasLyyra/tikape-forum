@@ -26,8 +26,8 @@ class DiscussionsController < ApplicationController
   end
 
   def show
-    @messages = Message.getMessagesByDiscussionId(@discussion.id)
-    @firstMessage = @messages.shift
+    @messages = Message.getMessagesByDiscussionId(@discussion.id).sort_by { |m| m.time}
+    @firstMessage = @messages.first
   end
 
   private

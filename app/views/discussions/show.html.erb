@@ -1,20 +1,18 @@
 <h1><%= @discussion.title %></h1>
-<p><%= @firstMessage.message %></p>
-<p>By: <%= User.GetUserById(@firstMessage.user_id).nick %></p>
-<% @messages.each do |message| %> 
-
-<%end%>
+<% @messages.each do |message| %>
+  <p><%= message.message %></p>
+  <p>By: <%= User.GetUserById(message.user_id).try(:nick) %> at <%= message.time.strftime('%H:%M') %></p>
+<% end %>
 <h3>New Message</h3>
-<%= form_for(:message, url: {controller: 'messages', action: 'create'}, html: {class: "form-horizontal"}) do |f| %>
+<%= form_tag category_discussion_messages_path(@category, @discussion) do |f| %>
   <div class="form-group">
     <div class="col-sm-6">
-      <%= f.text_area :message, required: true, rows: 15, class: "form-control"%>
+      <input type="text" class="form-control" rows="15" name="message[message]" placeholder="Kirjoita viesti">
     </div>
     <div class="col-sm-6"></div>
   </div>
-  <%= hidden_field_tag :category_id, params[:category_id]%>
   <div class="form-group" style="padding-left: 15px">
-    <%= f.submit "Post", class: "btn btn-default"%>
+   <%= submit_tag "Post", class: "btn btn-default" %>
   </div>
 <% end %>
 </div>

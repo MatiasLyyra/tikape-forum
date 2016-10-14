@@ -4,9 +4,11 @@ Rails.application.routes.draw do
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :categories
-  resources :discussions
-  resources :messages
+  resources :categories do
+    resources :discussions do
+      resources :messages
+    end
+  end
   get "/discussions/new/:category_id" => "discussions#new"
 
   get 'signin' => 'sessions#new'

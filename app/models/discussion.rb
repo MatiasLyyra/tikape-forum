@@ -1,7 +1,7 @@
 class Discussion < ApplicationRecord
   self.table_name = 'discussion'
 
-  validates :name, presence: true
+  validates :title, presence: true
   def self.validate?(title, category_id)
     title.length > 3 && (not Category.getCategoryById(category_id).nil?)
   end
@@ -19,10 +19,10 @@ class Discussion < ApplicationRecord
   end
 
   def self.getDiscussionsByCategory(category_id)
-    Discussion.find_by_sql(["SELECT * FROM Discussion 
+    Discussion.find_by_sql(["SELECT * FROM Discussion
       JOIN (SELECT discussion_id, MAX(time) AS MostRecent
       FROM Message
-      GROUP BY discussion_id) AS M ON Discussion.id = M.discussion_id 
+      GROUP BY discussion_id) AS M ON Discussion.id = M.discussion_id
       WHERE category_id=?
       ORDER BY M.MostRecent DESC", category_id.to_i])
   end

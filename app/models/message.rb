@@ -4,7 +4,7 @@ class Message < ApplicationRecord
   validates :message, presence: true
 
   def self.validate?(*attr)
-    attr.pop.length > 0 # katotaan miten tää saadaa sulaa: && (Discussion.getDiscussionById(discussion_id) != nil)
+    attr.first.length > 0 && attr.second.valid?
   end
 
   def self.createMessage(user_id, message, discussion_id)

@@ -8,8 +8,8 @@ class MessagesController < ApplicationController
   end
 
   def create
-    if Message.validate?(message_params[:message])
-      @discussion = Discussion.getDiscussionById(params[:discussion_id])
+    @discussion = Discussion.getDiscussionById(params[:discussion_id])
+    if Message.validate?(message_params[:message], @discussion)
       @category = Category.getCategoryById(params[:category_id])
       @message = Message.createMessage(@current_user.id,message_params[:message], params[:discussion_id]).first
       redirect_to category_discussion_path(@category, @discussion)

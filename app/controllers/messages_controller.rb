@@ -8,7 +8,6 @@ class MessagesController < ApplicationController
   end
 
   def create
-    byebug
     @discussion = Discussion.getDiscussionById(params[:discussion_id])
     if Message.validate?(params[:message], @discussion)
       @category = Category.getCategoryById(params[:category_id])

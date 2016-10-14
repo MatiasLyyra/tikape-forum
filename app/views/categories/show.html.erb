@@ -1,6 +1,6 @@
 <h1><%= @category.subject %></h1>
 <% if is_user_logged_in? %>
-  <%=link_to "Create discussion", controller: "discussions", action: "new", category_id: @category.id %>
+  <%=link_to "Create discussion", new_category_discussion_path(@category) %>
 <% else %>
   Login to start a new discussion
 <% end %>
@@ -15,7 +15,7 @@
   <tbody>
   <% @discussions.each do |discussion| %>
     <tr>
-      <td><%= link_to discussion.title, discussion_path(discussion.id) %></td>
+      <td><%= link_to discussion.title, category_discussion_path(discussion.id) %></td>
       <td><%= get_number_of_messages_in_discussion(discussion.id) %></td>
       <td><%= get_newest_message_date_in_discussion(discussion.id) %></td>
     </tr>

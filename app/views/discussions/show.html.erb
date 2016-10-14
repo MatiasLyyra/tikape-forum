@@ -1,18 +1,24 @@
 <h1><%= @discussion.title %></h1>
 <% @messages.each do |message| %>
-  <p><%= message.message %></p>
-  <p>By: <%= User.GetUserById(message.user_id).try(:nick) %> at <%= message.time.strftime('%H:%M') %></p>
-<% end %>
-<h3>New Message</h3>
-<%= form_tag category_discussion_messages_path(@category, @discussion) do |f| %>
-  <div class="form-group">
-    <div class="col-sm-6">
-      <input type="text" class="form-control" rows="15" name="message[message]" placeholder="Kirjoita viesti">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">By: <%= User.GetUserById(message.user_id).try(:nick) %> at <%= message.time.strftime('%H:%M') %></h3>
     </div>
-    <div class="col-sm-6"></div>
-  </div>
-  <div class="form-group" style="padding-left: 15px">
-   <%= submit_tag "Post", class: "btn btn-default" %>
+    <div class="panel-body">
+      <%= message.message %>
+    </div>
   </div>
 <% end %>
+
+<%= form_tag category_discussion_messages_path(@category, @discussion) do |f| %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">New Message</h3>
+  </div>
+  <div class="panel-body">
+    <%= text_area_tag 'message', nil, class:'form-control', placeholder:'Kirjoita viesti', rows:'10' %>
+    <br>
+     <%= submit_tag "Post Message", class: "btn btn-large btn-primary" %>
+  </div>
 </div>
+<% end %>

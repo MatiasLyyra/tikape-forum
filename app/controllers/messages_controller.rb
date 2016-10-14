@@ -8,10 +8,11 @@ class MessagesController < ApplicationController
   end
 
   def create
+    byebug
     @discussion = Discussion.getDiscussionById(params[:discussion_id])
-    if Message.validate?(message_params[:message], @discussion)
+    if Message.validate?(params[:message], @discussion)
       @category = Category.getCategoryById(params[:category_id])
-      @message = Message.createMessage(@current_user.id,message_params[:message], params[:discussion_id]).first
+      @message = Message.createMessage(@current_user.id,params[:message], params[:discussion_id]).first
       redirect_to category_discussion_path(@category, @discussion)
     else
       flash[:alert] = 'Invalid form'
@@ -26,7 +27,6 @@ class MessagesController < ApplicationController
 
   def message_params
     # List of common params
-    list_params_allowed = [:message]
-    params.require(:message).permit(list_params_allowed)
+    params.require(:message).permit(:message)
   end
 end

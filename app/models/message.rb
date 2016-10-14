@@ -4,7 +4,7 @@ class Message < ApplicationRecord
   validates :message, presence: true
 
   def self.validate?(message, discussion)
-    message.length > 0 && discussion.nil?
+    message.length > 0 && !discussion.nil?
   end
 
   def self.createMessage(user_id, message, discussion_id)

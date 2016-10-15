@@ -20,8 +20,10 @@ class Message < ApplicationRecord
     Message.find_by_sql(["SELECT * FROM Message WHERE user_id=?", id.to_i])
   end
 
-  def self.getMessagesByDiscussionId(discussion_id)
-    Message.find_by_sql(["SELECT * FROM Message WHERE discussion_id=? ORDER BY time DESC", discussion_id.to_i])
+  def self.getMessagesByDiscussionId(discussion_id, page = nil)
+    offset = (page.to_i-1) * 10
+    Message.find_by_sql(["SELECT * FROM Message WHERE discussion_id=? 
+      ORDER BY time ASC LIMIT 10 OFFSET ?", discussion_id.to_i, offset.to_i])
   end
 
   def self.getMessageById(id)

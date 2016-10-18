@@ -18,12 +18,14 @@ class Discussion < ApplicationRecord
     Discussion.find_by_sql(["SELECT * FROM Discussion WHERE id=?", id.to_i]).first
   end
 
-  def self.getDiscussionsByCategory(category_id)
+  def self.getDiscussionsByCategory(category_id, page=nil)
+    offset = (page.to_i-1) * 10
     Discussion.find_by_sql(["SELECT * FROM Discussion
       JOIN (SELECT discussion_id, MAX(time) AS MostRecent
       FROM Message
       GROUP BY discussion_id) AS M ON Discussion.id = M.discussion_id
       WHERE category_id=?
-      ORDER BY M.MostRecent DESC", category_id.to_i])
+      ORDER BY M.MostRecent DESC
+      LIMIT 10 OFFSET ?", category_id.to_i, offset])
   end
 end

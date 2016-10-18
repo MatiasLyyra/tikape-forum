@@ -3,7 +3,7 @@
 <% @messages.each do |message| %>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">By: <%= User.GetUserById(message.user_id).try(:nick) %> at <%= message.time.strftime('%H:%M') %></h3>
+      <h3 class="panel-title">By: <%= link_to User.GetUserById(message.user_id).try(:nick),user_path(message.user_id) %> at <%= message.time.strftime('%H:%M %Y-%m-%d') %></h3>
     </div>
     <div class="panel-body">
       <%= simple_format(h(message.message)) %>
@@ -24,7 +24,7 @@
 </div>
 <% end %>
 <% else %>
-Log in to post a message
+Log in to post a message<br/>
 <% end %>
 <div class="btn-group" style="margin-bottom: 10px" role="group" >
   <% (get_number_of_messages_in_discussion(@discussion.id)/10+1).times do |i| %>

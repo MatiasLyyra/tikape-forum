@@ -13,7 +13,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @discussions = Discussion.getDiscussionsByCategory(@category.id)
+    @discussions = Discussion.getDiscussionsByCategory(@category.id, params[:page])
   end
 
   private

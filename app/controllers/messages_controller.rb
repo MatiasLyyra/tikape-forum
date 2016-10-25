@@ -11,7 +11,7 @@ class MessagesController < ApplicationController
     @discussion = Discussion.getDiscussionById(params[:discussion_id])
     if Message.validate?(params[:message], @discussion)
       @category = Category.getCategoryById(params[:category_id])
-      @message = Message.createMessage(@current_user.id,params[:message], params[:discussion_id]).first
+      @message = Message.createMessage(@current_user.id,params[:message], params[:discussion_id])
       redirect_to category_discussion_path(@category, @discussion)
     else
       flash[:alert] = 'Invalid form'

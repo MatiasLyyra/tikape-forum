@@ -19,7 +19,10 @@ class Discussion < ApplicationRecord
   end
 
   def self.getDiscussionsByCategory(category_id, page=nil)
-    offset = (page.to_i-1) * 10
+    offset = 0
+    unless page.nil?
+      offset = (page.to_i-1) * 10
+    end
     Discussion.find_by_sql(["SELECT * FROM Discussion
       JOIN (SELECT discussion_id, MAX(time) AS MostRecent
       FROM Message

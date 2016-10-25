@@ -21,7 +21,10 @@ class Message < ApplicationRecord
   end
 
   def self.getMessagesByDiscussionId(discussion_id, page = nil)
-    offset = (page.to_i-1) * 10
+    offset = 0
+    unless page.nil?
+      offset = (page.to_i-1) * 10
+    end
     Message.find_by_sql(["SELECT * FROM Message WHERE discussion_id=? 
       ORDER BY time ASC LIMIT 10 OFFSET ?", discussion_id.to_i, offset.to_i])
   end

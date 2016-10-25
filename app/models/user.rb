@@ -15,7 +15,10 @@ class User < ApplicationRecord
   end
 
   def self.CreateUser(nick, password, salt)
-    User.find_by_sql(["INSERT INTO User (nick, password, salt) VALUES (?, ?, ?)", nick.to_s, password, salt])
+    #User.find_by_sql(["INSERT INTO User (nick, password, salt) VALUES (?, ?, ?)", nick.to_s, password, salt])
+    st = ActiveRecord::Base.connection.raw_connection.prepare("INSERT INTO User (nick, password, salt) VALUES (?, ?, ?)")
+    st.execute(nick.to_s, password, salt)
+    st.close
   end
 
   def self.GetUserByNick(nick)
@@ -33,24 +36,35 @@ class User < ApplicationRecord
 
   def updateNick(nick)
     self.nick = nick.to_s
-    User.find_by_sql(["UPDATE User SET nick=? WHERE id=?", self.nick, self.id]);
+    st = ActiveRecord::Base.connection.raw_connection.prepare("UPDATE User SET nick=? WHERE id=?")
+    st.execute(self.nick, self.id)
+    st.close
+    #User.find_by_sql(["UPDATE User SET nick=? WHERE id=?", self.nick, self.id])
   end
 
   def updatePassword(password)
     self.salt = BCrypt::Engine.generate_salt
     self.password = BCrypt::Engine.hash_secret(password, self.salt)
-    User.find_by_sql(["UPDATE User SET password=?, salt=? WHERE id=?", self.password, self.salt, self.id]);
+    st = ActiveRecord::Base.connection.raw_connection.prepare("UPDATE User SET password=?, salt=? WHERE id=?")
+    st.execute(self.password, self.salt, self.id)
+    st.close
+    #User.find_by_sql(["UPDATE User SET password=?, salt=? WHERE id=?", self.password, self.salt, self.id])
   end
 
   def changeAdminStatus(admin)
     self.admin = admin
-    User.find_by_sql(["UPDATE User SET admin=? WHERE id=?", (self.admin ? 1 : 0), self.id]);
-
+    st = ActiveRecord::Base.connection.raw_connection.prepare("UPDATE User SET admin=? WHERE id=?")
+    st.execute((self.admin ? 1 : 0), self.id)
+    st.close
+    #User.find_by_sql(["UPDATE User SET admin=? WHERE id=?", (self.admin ? 1 : 0), self.id])
   end
 
   def newLogin
     time = Time.now.getutc.strftime('%Y-%m-%d %H:%M:%S')
     self.last_login = time
-    self.class.find_by_sql(["UPDATE User SET last_login=? WHERE id=?", time, self.id]);
+    st = ActiveRecord::Base.connection.raw_connection.prepare("UPDATE User SET last_login=? WHERE id=?")
+    st.execute(time, self.id)
+    st.close
+    #User.find_by_sql(["UPDATE User SET last_login=? WHERE id=?", time, self.id])
   end
 end

@@ -4,7 +4,10 @@ class Category < ApplicationRecord
   validates :name, presence: true
 
   def self.createCategory(subject)
-    Category.find_by_sql(["INSERT INTO Category (subject) VALUES (?)", subject.to_s])
+    st = ActiveRecord::Base.connection.raw_connection.prepare("INSERT INTO Category (subject) VALUES (?)")
+    st.execute(subject.to_s)
+    st.close
+    #Category.find_by_sql(["INSERT INTO Category (subject) VALUES (?)", subject.to_s])
   end
 
   def self.findCategory(subject)

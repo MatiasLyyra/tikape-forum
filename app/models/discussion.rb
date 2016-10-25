@@ -7,7 +7,10 @@ class Discussion < ApplicationRecord
   end
 
   def self.createDiscussion(title, category_id)
-    Discussion.find_by_sql(["INSERT INTO Discussion (title, category_id) VALUES (?, ?)", title.to_s, category_id.to_i])
+    st = ActiveRecord::Base.connection.raw_connection.prepare("INSERT INTO Discussion (title, category_id) VALUES (?, ?)")
+    st.execute(title.to_s, category_id.to_i)
+    st.close
+    #Discussion.find_by_sql(["INSERT INTO Discussion (title, category_id) VALUES (?, ?)", title.to_s, category_id.to_i])
   end
 
   def self.findDiscussionsByTitle(title)

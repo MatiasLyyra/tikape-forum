@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     user = User.GetUserByNick(params[:nick])
     if user and User.Authenticate(params[:nick], params[:password])
       session[:user_id] = user.id
-      user.newLogin
+      #user.newLogin
       redirect_to :root, notice: "Successfully logged in!"
     else
       redirect_to_back_or_root alert: "Password or nick did not match"

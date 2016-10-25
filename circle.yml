@@ -6,3 +6,6 @@ deployment:
    branch: master
    commands:
      - eb deploy tikapeForum-env --profile default
+notify:
+ webhooks:
+   - url: https://discordapp.com/api/webhooks/240565798463209472/x_8X1veK1S0O7hx-r2M4Mu1Iqqpkn5-BBcaSOTrlDLa-jyFmkbngWh1UlXbD21H78Nbn

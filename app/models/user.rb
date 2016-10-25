@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  unloadable
   self.table_name = 'User'
 
   def self.Validate?(params)

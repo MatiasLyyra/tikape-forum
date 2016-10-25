@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  unloadable
   require 'bcrypt'
   before_action :set_user, only:[:show, :edit, :update]
   before_action :save_login_state, only: [:new, :create]

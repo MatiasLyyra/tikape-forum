@@ -1,5 +1,5 @@
 class Discussion < ApplicationRecord
-  self.table_name = 'discussion'
+  self.table_name = 'Discussion'
 
   validates :title, presence: true
   def self.validate?(title, category_id)
@@ -7,7 +7,10 @@ class Discussion < ApplicationRecord
   end
 
   def self.createDiscussion(title, category_id)
-    Discussion.find_by_sql(["INSERT INTO Discussion (title, category_id) VALUES (?, ?)", title.to_s, category_id.to_i])
+    st = ActiveRecord::Base.connection.raw_connection.prepare("INSERT INTO Discussion (title, category_id) VALUES (?, ?)")
+    st.execute(title.to_s, category_id.to_i)
+    st.close
+    #Discussion.find_by_sql(["INSERT INTO Discussion (title, category_id) VALUES (?, ?)", title.to_s, category_id.to_i])
   end
 
   def self.findDiscussionsByTitle(title)
@@ -19,7 +22,10 @@ class Discussion < ApplicationRecord
   end
 
   def self.getDiscussionsByCategory(category_id, page=nil)
-    offset = (page.to_i-1) * 10
+    offset = 0
+    unless page.nil?
+      offset = (page.to_i-1) * 10
+    end
     Discussion.find_by_sql(["SELECT * FROM Discussion
       JOIN (SELECT discussion_id, MAX(time) AS MostRecent
       FROM Message

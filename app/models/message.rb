@@ -9,10 +9,10 @@ class Message < ApplicationRecord
 
   def self.createMessage(user_id, message, discussion_id)
     time = Time.now.getutc.strftime('%Y-%m-%d %H:%M:%S')
-    st = ActiveRecord::Base.connection.raw_connection.prepare("INSERT INTO Message (user_id, message, time, last_edited, discussion_id) VALUES (?, ?, ?, ?, ?)")
-    st.execute(user_id.to_i, message.to_s, time, time, discussion_id.to_i)
-    st.close
-    #Message.find_by_sql(["INSERT INTO Message (user_id, message, time, last_edited, discussion_id) VALUES (?, ?, ?, ?, ?)", user_id.to_i, message.to_s, time, time, discussion_id.to_i])
+    #st = ActiveRecord::Base.connection.raw_connection.prepare("INSERT INTO Message (user_id, message, time, last_edited, discussion_id) VALUES (?, ?, ?, ?, ?)")
+    #st.execute(user_id.to_i, message.to_s, time, time, discussion_id.to_i)
+    #st.close
+    Message.find_by_sql(["INSERT INTO Message (user_id, message, time, last_edited, discussion_id) VALUES (?, ?, ?, ?, ?)", user_id.to_i, message.to_s, time, time, discussion_id.to_i])
   end
 
   #def self.findMessage(message) <--- finds by content (SORT BY..?)

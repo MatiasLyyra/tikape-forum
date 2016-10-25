@@ -1,5 +1,5 @@
 class Discussion < ApplicationRecord
-  self.table_name = 'discussion'
+  self.table_name = 'Discussion'
 
   validates :title, presence: true
   def self.validate?(title, category_id)

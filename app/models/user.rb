@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  self.table_name = 'user'
+  self.table_name = 'User'
 
   def self.Validate?(params)
     User.ValidateNick(params[:nick]) and

@@ -1,5 +1,5 @@
 class Message < ApplicationRecord
-  self.table_name = 'message'
+  self.table_name = 'Message'
 
   validates :message, presence: true
 

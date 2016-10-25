@@ -1,5 +1,5 @@
 class Category < ApplicationRecord
-  self.table_name = 'category'
+  self.table_name = 'Category'
 
   validates :name, presence: true
 

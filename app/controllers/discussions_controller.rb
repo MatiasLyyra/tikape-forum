@@ -16,9 +16,9 @@ class DiscussionsController < ApplicationController
     if Discussion.validate?(discussion_params[:title], @category.id) && discussion_params[:message] != nil
       Discussion.createDiscussion(discussion_params[:title], @category.id)
       #Dirty hack below.
-      @discussion = Discussion.where(title: discussion_params[:title]).order("time DESC").first
-      Message.createMessage(session[:user_id], discussion_params[:message], @discussion.id)
-      redirect_to [@category,@discussion]
+      discussion = Discussion.where(title: discussion_params[:title]).order("time DESC").first
+      Message.createMessage(@current_user.id, discussion_params[:message], discussion.id)
+      redirect_to [@category,discussion]
     else
       flash[:alert] = 'Invalid form'
       redirect_to :back

@@ -51,6 +51,6 @@ class User < ApplicationRecord
   def newLogin
     time = Time.now.getutc.strftime('%Y-%m-%d %H:%M:%S')
     self.last_login = time
-    User.find_by_sql(["UPDATE User SET last_login=? WHERE id=?", time, self.id]);
+    self.class.find_by_sql(["UPDATE User SET last_login=? WHERE id=?", time, self.id]);
   end
 end

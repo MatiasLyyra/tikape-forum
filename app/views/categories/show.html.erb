@@ -17,7 +17,7 @@
     <tr>
       <td><%= link_to discussion.title, [@category, discussion] %></td>
       <td><%= get_number_of_messages_in_discussion(discussion.id) %></td>
-      <td><%= TimeSanitizer.output(get_newest_message_date_in_discussion(discussion.id)).strftime('%d/%m/%Y %H:%M')) %></td>
+      <td><%= TimeSanitizer.output(get_newest_message_date_in_discussion(discussion.id)).strftime('%d/%m/%Y %H:%M') %></td>
     </tr>
   <% end %>
   </tbody>

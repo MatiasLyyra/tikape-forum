@@ -42,7 +42,7 @@ class CategoriesController < ApplicationController
       @parent_category = Category.getCategoryById(@category.upper_category_id)
     end
     @discussions = Discussion.getDiscussionsByCategory(@category.id, params[:page])
-    .sort_by{|discussion| Message.getMessagesByDiscussionId(discussion.id).map(&:last_edited)}
+    #.sort_by{|discussion| Message.getMessagesByDiscussionId(discussion.id).map(&:last_edited)}
   end
 
   private

@@ -1,11 +1,14 @@
-<h1><%= @category.subject %></h1>
+<% if @parent_category %>
+  <h1><%= link_to @parent_category.subject.capitalize, category_path(@parent_category) %> > <%= @category.subject.capitalize %></h1>
+<% else %>
+  <h1><%= @category.subject %></h1>
+<% end %>
 <% if is_user_logged_in? %>
   <%= link_to "Create discussion", new_category_discussion_path(@category) %>
   <%= link_to 'Create sub-category', category_new_subcategory_path(@category)  %>
 <% else %>
   Login to start a new discussion
 <% end %>
-
 <% if not @allSubCategories[@category.id].nil? %>
   <table class="table table-striped">
     <thead>

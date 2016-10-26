@@ -51,7 +51,7 @@
   </tbody>
 </table>
 <div class="btn-group" style="margin-bottom: 10px" role="group" >
-  <% (get_number_of_discussions_in_category(@category.id)/10+1).times do |i| %>
+  <% ((get_number_of_discussions_in_category(@category.id)/11) + 1).times do |i| %>
   <%= link_to((i+1), [@category,@discussion, page: (i+1)], class: "btn btn-default")%>
   <% end %>
 </div>

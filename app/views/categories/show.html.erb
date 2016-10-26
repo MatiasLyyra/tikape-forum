@@ -5,11 +5,14 @@
 <% end %>
 <% if is_user_logged_in? %>
   <%= link_to "Create discussion", new_category_discussion_path(@category) %>
-  <%= link_to 'Create sub-category', category_new_subcategory_path(@category)  %>
 <% else %>
   Login to start a new discussion
 <% end %>
+<% if is_current_user_admin? %>
+  <%= link_to 'Create sub-category', category_new_subcategory_path(@category)  %>
+<% end %>
 <% if not @allSubCategories[@category.id].nil? %>
+  <h3>Sub categories</h3>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -31,7 +34,7 @@
     </tbody>
   </table>
 <% end %>
-
+<h3>Discussions</h3>
 <table class="table table-striped">
   <thead>
     <tr>

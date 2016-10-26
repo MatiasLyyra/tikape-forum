@@ -1,5 +1,6 @@
 
 class CategoriesController < ApplicationController
+  before_action :authenticate_admin, only: [:create, :new, :new_subcategory]
   before_action :set_category, only: [:show]
   before_action :list_all_categories, :list_all_sub_categories, only: [:index, :show]
 

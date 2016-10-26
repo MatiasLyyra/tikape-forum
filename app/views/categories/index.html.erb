@@ -21,7 +21,7 @@
           <td style="padding-left: 25px">&#8627;<%= link_to subCategory.subject.capitalize, subCategory %></td>
           <td><%= get_number_of_discussions_in_category(subCategory.id) %></td>
           <td><%= get_number_of_messages_in_category(subCategory.id) %></td>
-          <td><%= get_newest_message_date_in_category(subCategory.id) %></td>
+          <td><%= TimeSanitizer.output(get_newest_message_date_in_category(subCategory.id)).try(:strftime, '%d/%m/%Y %H:%M') %></td>
         </tr>
       <% end %>
     <% end %>
@@ -29,6 +29,6 @@
   </tbody>
 </table>
 <br>
-<% if is_user_logged_in? %>
+<% if is_current_user_admin? %>
 <h2><%= link_to 'Create Category', new_category_path  %></h2>
 <% end %>

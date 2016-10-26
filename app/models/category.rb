@@ -1,11 +1,25 @@
 class Category < ApplicationRecord
   self.table_name = 'Category'
 
-  validates :name, presence: true
+  validates :subject, presence: true
+  def self.validate?(*args)
+    if args.second
+      args.first.length > 3 && !Category.getCategoryById(args.second).nil?
+    else
+      args.first.length > 3
+    end
+  end
 
   def self.createCategory(subject)
     st = ActiveRecord::Base.connection.raw_connection.prepare("INSERT INTO Category (subject) VALUES (?)")
     st.execute(subject.to_s)
+    st.close
+    #Category.find_by_sql(["INSERT INTO Category (subject) VALUES (?)", subject.to_s])
+  end
+
+  def self.createSubCategory(subject, category_id)
+    st = ActiveRecord::Base.connection.raw_connection.prepare("INSERT INTO Category (subject, upper_category_id) VALUES (?,?)")
+    st.execute(subject.to_s, category_id.to_i)
     st.close
     #Category.find_by_sql(["INSERT INTO Category (subject) VALUES (?)", subject.to_s])
   end

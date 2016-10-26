@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :categories do
+    get 'new_subcategory' => 'categories#new_subcategory'
     resources :discussions do
       resources :messages
     end

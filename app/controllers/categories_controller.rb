@@ -1,7 +1,7 @@
 
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show]
-  before_action :list_all_categories, :list_all_sub_categories, only: [:index]
+  before_action :list_all_categories, :list_all_sub_categories, only: [:index, :show]
 
   def index
   end
@@ -10,10 +10,35 @@ class CategoriesController < ApplicationController
   end
 
   def create
+    if params[:category_id].present?
+      if Category.validate?(params[:category][:subject], params[:category_id])
+        Category.createSubCategory(params[:category][:subject], params[:category_id])
+        category = Category.findCategory(params[:category][:subject])
+        #Dirty hack below.
+        redirect_to (category)
+      else
+        flash[:alert] = 'Invalid form'
+        redirect_to :back
+      end
+    else
+      if Category.validate?(params[:category][:subject])
+        Category.createCategory(params[:category][:subject])
+        category = Category.findCategory(params[:category][:subject])
+        #Dirty hack below.
+        redirect_to (category)
+      else
+        flash[:alert] = 'Invalid form'
+        redirect_to :back
+      end
+    end
+  end
+
+  def new_subcategory
   end
 
   def show
     @discussions = Discussion.getDiscussionsByCategory(@category.id, params[:page])
+    .sort_by{|discussion| Message.getMessagesByDiscussionId(discussion.id).map(&:last_edited)}
   end
 
   private
@@ -33,5 +58,11 @@ class CategoriesController < ApplicationController
       @allSubCategories[subCategory.upper_category_id] ||= Array.new
       @allSubCategories[subCategory.upper_category_id].push(subCategory)
     end
+  end
+
+  def category_params
+    # List of common params
+    list_params_allowed = [:subject, :upper_category_id]
+    params.require(:category).permit(list_params_allowed)
   end
 end

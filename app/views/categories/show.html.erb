@@ -1,9 +1,34 @@
 <h1><%= @category.subject %></h1>
 <% if is_user_logged_in? %>
-  <%=link_to "Create discussion", new_category_discussion_path(@category) %>
+  <%= link_to "Create discussion", new_category_discussion_path(@category) %>
+  <%= link_to 'Create sub-category', category_new_subcategory_path(@category)  %>
 <% else %>
   Login to start a new discussion
 <% end %>
+
+<% if not @allSubCategories[@category.id].nil? %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Discussions</th>
+        <th>Messages</th>
+        <th>Latest Message</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% @allSubCategories[@category.id].each do |subCategory| %>
+          <tr>
+            <td style="padding-left: 25px">&#8627;<%= link_to subCategory.subject, subCategory %></td>
+            <td><%= get_number_of_discussions_in_category(subCategory.id) %></td>
+            <td><%= get_number_of_messages_in_category(subCategory.id) %></td>
+            <td><%= get_newest_message_date_in_category(subCategory.id) %></td>
+          </tr>
+        <% end %>
+    </tbody>
+  </table>
+<% end %>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -17,7 +42,7 @@
     <tr>
       <td><%= link_to discussion.title, [@category, discussion] %></td>
       <td><%= get_number_of_messages_in_discussion(discussion.id) %></td>
-      <td><%= TimeSanitizer.output(get_newest_message_date_in_discussion(discussion.id)).strftime('%d/%m/%Y %H:%M') %></td>
+      <td><%= TimeSanitizer.output(get_newest_message_date_in_discussion(discussion.id)).try(:strftime, '%d/%m/%Y %H:%M') %></td>
     </tr>
   <% end %>
   </tbody>

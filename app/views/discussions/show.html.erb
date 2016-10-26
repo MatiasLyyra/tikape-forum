@@ -3,7 +3,7 @@
 <% @messages.each do |message| %>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">By: <%= link_to User.GetUserById(message.user_id).try(:nick),user_path(message.user_id) %> at <%= TimeSanitizer.output(message.time).strftime('%d/%m/%Y %H:%M') %></h3>
+      <h3 class="panel-title">By: <%= link_to User.GetUserById(message.user_id).try(:nick),user_path(message.user_id) %> at <%= TimeSanitizer.output(message.time).try(:strftime, '%d/%m/%Y %H:%M') %></h3>
     </div>
     <div class="panel-body">
       <%= simple_format(h(message.message)) %>

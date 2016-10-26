@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user, only: [:edit, :update]
   before_action :check_if_current_user, only: [:edit, :update]
   before_action :authenticate_admin, only: [:list]
-  
+
   def new
   end
 
@@ -21,7 +21,9 @@ class UsersController < ApplicationController
       User.CreateUser(user_params[:nick], password, password_salt)
       #Whoa, used ActiveRecords find_by here, please don't crucify me. find_by_sql bugged for some reason here 4/5 times
       @user = User.find_by(nick: user_params[:nick])
-      redirect_to signin_path(nick: @user.nick)
+      session[:user_id] = @user.id
+      @user.newLogin
+      redirect_to :root, notice: "Successfully logged in!"
     else
       if not User.GetUserByNick(user_params[:nick]).nil?
         flash[:alert] = 'Nick is already taken'
@@ -59,7 +61,7 @@ class UsersController < ApplicationController
   def show
   end
 
-  private 
+  private
   def set_user
     @user = User.GetUserById(params[:id])
   end

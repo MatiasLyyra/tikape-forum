@@ -13,7 +13,7 @@
       <td><%= link_to category.subject, category %></td>
       <td><%= get_number_of_discussions_in_category(category.id) %></td>
       <td><%= get_number_of_messages_in_category(category.id) %></td>
-      <td><%= get_newest_message_date_in_category(category.id) %></td>
+      <td><%= TimeSanitizer.output(get_newest_message_date_in_category(category.id)).strftime('%d/%m/%Y %H:%M')) %></td>
     </tr>
     <% if not @allSubCategories[category.id].nil? %>
       <% @allSubCategories[category.id].each do |subCategory| %>

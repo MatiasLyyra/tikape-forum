@@ -29,4 +29,6 @@
   </tbody>
 </table>
 <br>
+<% if is_user_logged_in? %>
 <h2><%= link_to 'Create Category', new_category_path  %></h2>
+<% end %>
